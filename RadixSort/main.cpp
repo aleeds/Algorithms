@@ -20,6 +20,7 @@ bool isSorted(T begin, T end);
 //void radixSort(T begin, T end, K keyFunc);
 
 void startTests();
+void testCountingSort();
 void test1();
 void test2();
 void test3();
@@ -28,8 +29,24 @@ void test4();
 int main(int argc, char* argv[]) {
 
 	//startTests();
+	testCountingSort();
 
 	return 0;
+}
+
+void testCountingSort() {
+	cout << endl;
+	cout << "========================================================" << "\n";
+	cout << "================== COUNTING SORT TEST ==================" << "\n";
+	cout << "========================================================" << "\n";
+   vector<int> v{1,5,2,4,3,7,9,6,10,8}; 
+	printVector(v);	
+	vector<int> cts(10);
+	countingSort(v.begin(), v.end(), [](int x) { return x; }, 0, cts.begin());
+	printVector(cts);	
+   if (isSorted(cts.begin(), cts.end())) cout << "The collection is sorted" << endl;
+   else cout << "The collection is NOT sorted" << endl;
+	cout << endl;
 }
 
 void startTests() {
