@@ -28,8 +28,8 @@ void test4();
 
 int main(int argc, char* argv[]) {
 
-	//startTests();
-	testCountingSort();
+	startTests();
+	//testCountingSort();
 
 	return 0;
 }
@@ -39,10 +39,10 @@ void testCountingSort() {
 	cout << "========================================================" << "\n";
 	cout << "================== COUNTING SORT TEST ==================" << "\n";
 	cout << "========================================================" << "\n";
-   vector<int> v{1,5,2,4,3,7,9,6,10,8}; 
+   vector<int> v{1,5,2,4,3,7,9,6,10,8,2}; 
 	printVector(v);	
 	vector<int> cts(10);
-	countingSort(v.begin(), v.end(), [](int x) { return x; }, 0, cts.begin());
+	//countingSort(v.begin(), v.end(), [](int x) { return x; }, 0, cts.begin());
 	printVector(cts);	
    if (isSorted(cts.begin(), cts.end())) cout << "The collection is sorted" << endl;
    else cout << "The collection is NOT sorted" << endl;
@@ -58,11 +58,11 @@ void startTests() {
   	clock_t end = clock();
   	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
 	cout << "==================================================" << "\n";
-  	begin = clock();
-	test3();
-  	end = clock();
-  	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
-	cout << "==================================================" << "\n";
+  	//begin = clock();
+	//test3();
+  	//end = clock();
+  	//cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
+	//cout << "==================================================" << "\n";
 }
 
 //Print Vector prints out the vector in a readable format
