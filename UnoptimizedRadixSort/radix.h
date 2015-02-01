@@ -30,9 +30,9 @@ struct wrapper {
 };
 
 template<typename T, typename K>
-void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin, vector<wrapper<typename T::value_type>> &wrappers) { 
+void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin) {
 	//Create a vector with the count of each element in the original vector
-	vector<int> counts(256, 0);
+	vector<int> counts(256);
 	cout << "=================================================\n";	
 	cout << "Counts: [";
 	for (T itr = counts.begin(); itr != counts.end(); ++itr) {	
@@ -40,30 +40,17 @@ void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin, vector<wrapper<t
 	}
 	cout << "]\n";
 	cout << "=================================================\n";	
-	if (i == 0) {
-		for (T b = begin; b != end; ++b) {	
-			wrapper<typename T::value_type> w(*b, keyFunc(*b));
-			wrappers.push_back(w);
-			int curVal = w.keyValue >> i; 
+	for (T b = begin; b != end; ++b) {	
+		int key = keyFunc(*b);
+		if (key == 0) {
+			++counts[0];
+		} else {
+			//wrapper<typename T::value_type> w(*b, keyFunc(*b));
+			//wrappers.push_back(w);
+			int curVal = key >> i; 
 			curVal = curVal & 0xff;
 			++counts[curVal];
 		}
-	}
-	else {
-		for (auto w = wrappers.begin(); w != wrappers.end(); ++w) {	
-			if (w->keyValue == 0) {
-				++counts[0];
-			}
-			else {
-				cout << "Current Key Value: " << w->keyValue << " ";	
-				int curVal = w->keyValue >> i; 
-				cout << "Key Value >> " << i << " : " << curVal << " ";	
-				curVal = curVal & 0xff;
-				if (curVal != 0)
-					++counts[curVal]; 
-			}
-		}
-		cout << "\n=================================================\n";	
 	}
 
 	cout << "=================================================\n";	
@@ -91,14 +78,15 @@ void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin, vector<wrapper<t
 	}
 	cout << "=================================================\n";	
 	HCR();
-	for (auto itr = wrappers.end() - 1; itr != wrappers.begin() - 1; --itr) {
+	for (auto itr = end - 1; itr != begin - 1; --itr) {
 		//Gets cts index from counts
-		int ctsIndex = counts[(*itr).keyValue] - 1;	 
+		int key = keyFunc(*itr);
+		int ctsIndex = counts[key] - 1;	 
 		//REPLACE THIS!!
 		T curPtr = getPtrFromIndex(ctsbegin, ctsIndex);
-		*curPtr = itr->origValue;
+		*curPtr = *itr;
 		//--counts[keyFunc(*itr)];
-		--counts[(*itr).keyValue];
+		--counts[key];
 	}
 	cout << "=================================================\n";	
 	cout << "CTS\n";
@@ -113,10 +101,10 @@ void radixSort(T begin, T end, K keyFunc) {
 
 	vector<typename T::value_type> cts(end-begin);	
 	//vector<wrapper<typename T::value_type>> wrappers;
-	vector<wrapper<typename T::value_type>> wrappers;
+	//vector<wrapper<typename T::value_type>> wrappers;
 	//for (int i = 0; i < 1; ++i)  {
 		//countingSort(begin, end, keyFunc, i*8, cts.begin(), wrappers); 
-		countingSort(begin, end, keyFunc, 0, cts.begin(), wrappers); 
+		countingSort(begin, end, keyFunc, 0, cts.begin()); 
 /*
 		auto cItr = cts.begin();
 		T itr = begin;
