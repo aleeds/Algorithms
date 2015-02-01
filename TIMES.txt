@@ -6,6 +6,7 @@ Wrapped Radix Sort
 13.9 secs -Ofast
 13.33 secs -O3
 13.36 secs -O2
+13.27 secs - Ofast
 
 UnWrapped Radix Sort
 

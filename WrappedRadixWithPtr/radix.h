@@ -7,7 +7,7 @@ using std::vector;
 template<typename T>
 struct wrapper {
 	T origValue;	
-	double keyValue;
+	int keyValue;
 	wrapper() {}
 	wrapper(T p, int v) {
 		origValue = p;
@@ -61,9 +61,9 @@ void radixSort(T begin, T end, K keyFunc) {
 
 	vector<wrapper<typename T::value_type>> wrappers;
 
-	for (int i = 0; i < 8; ++i)  {
+	for (int i = 0; i < 4; ++i)  {
 		bool changedValue = countingSort(begin, end, keyFunc, i*8, wrappers); 
 		if (!changedValue)
-			break;
+			return;
 	}
 }
