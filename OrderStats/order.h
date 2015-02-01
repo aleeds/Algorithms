@@ -88,7 +88,33 @@ template<typename T, typename C> T medianOfMedians(T begin, T end, const C &lt) 
 
 template<typename T,typename C,typename S>
 T linearOrderStat(T begin, T end,C lt,S index) {
+    if(begin == end-1) {
+                                                          // std::cout << "One Element List: " << *begin << "\n";
+    return begin;
+  } else {
+    auto pivot = medianOfMedians(begin, end, lt);
+    linearPartition(begin, end, lt, pivot);
+                                                          // std::cout << "=================================================\n";  
+                                                          // std::cout << "Pivot: " << *pivot << '\n'; 
+                                                          // std::cout << "Vector: ";
+                                                          // for(auto i = begin; i != end; ++i) {
+                                                          //   std::cout << *i << " ";
+                                                          // }
+                                                          // std::cout << '\n';
+    auto subSize = pivot - begin;
+                                                          // std::cout << "Index = " << index << " and subSize = " << subSize << "     ";
+    if(index == subSize) {
+                                                          // std::cout << "Returned Element " << *pivot << '\n';
+      return pivot;
+    } else if(index < subSize) {
+                                                          // std::cout << "Moved Left\n";
+      return randomOrderStat(begin, pivot-1, lt, index);
+    } else {
+                                                          // std::cout << "Moved Right\n";
 
+      return randomOrderStat(pivot+1, end, lt, index-(subSize+1));
+    }
+  }
 }
 
 #endif
