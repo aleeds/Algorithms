@@ -1,6 +1,8 @@
 #include <algorithm>
-#include <vector>
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
+#include <vector>
 #include "order.h"
 
 using std::cout;
@@ -71,15 +73,6 @@ bool isSorted(T begin, T end) {
   return true;
 }
 
-//Returns element at Nth index
-template<typename T,typename C>
-T &findNth(std::vector<T> &data,int index,const C &comp) {
-  std::sort(data.begin(), data.end(), [&](T a, T b) {
-    return (comp(a, b) <= 0);   
-  });
-  std::cout << data[index];
-  return data[index];
-}
 
 //Small int test
 void test1() {

@@ -9,6 +9,7 @@ T randomOrderStat(T begin, T end,C lt,S index);
 template<typename T,typename C,typename S>
 T linearOrderStat(T begin, T end,C lt,S index);
 
+
 template<typename T, typename C> T randomizedPartition(T begin, T end, const C &lt) {
   auto i = -1;
   auto randomInd = rand() % (end-begin);
@@ -63,11 +64,11 @@ template<typename T, typename C> T linearPartition(T begin, T end, const C &lt, 
 
     if (lt(*iter, pivot)) {
       place += 1;
-      iter_swap(begin + place, j);
+      iter_swap(begin + place, iter);
     }
   }
-  iter_swap(begin + i + 1, end - 1);
-  return (begin + i + 1);
+  iter_swap(begin + place + 1, end - 1);
+  return (begin + place + 1);
 }
 
 template<typename T, typename C> void insertion(T begin, T end, const C &lt) {
@@ -80,9 +81,8 @@ template<typename T, typename C> void insertion(T begin, T end, const C &lt) {
 template<typename T, typename C> T medianOfMedians(T begin, T end, const C &lt) {
   int numSubs = (end - begin) / 5;
   if((end - begin) % 5 != 0) ++numSubs;
-  std::vector medians(numSubs,0);
   for(int i = 0; i < numSubs; ++i) {
-    std::vector
+    // std::vector
   } 
 }
 
