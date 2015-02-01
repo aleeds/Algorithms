@@ -59,6 +59,12 @@ void startTests() {
   	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
 	cout << "==================================================" << "\n";
   	begin = clock();
+	test2();
+  	end = clock();
+  	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
+	cout << "==================================================" << "\n";
+	cout << "==================================================" << "\n";
+  	begin = clock();
 	test3();
   	end = clock();
   	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
@@ -102,12 +108,13 @@ void test1() {
 }
 
 //Big Int Test
-void test3() {
+void test2() {
 	cout << endl;
 	cout << "======================================================" << "\n";
-	cout << "==================== BIG INT TEST ====================" << "\n";
+	cout << "================== MEDIUM INT TEST ===================" << "\n";
 	cout << "======================================================" << "\n";
-	srand(25);
+	//srand(25);
+	srand(1);
 	vector<int> v;
 	for (int i = 0; i < 100; ++i) {
 		v.push_back(rand() % 5000);
@@ -117,4 +124,22 @@ void test3() {
    else cout << "The collection is NOT sorted" << endl;
 	cout << endl;
 }
+//Big Int Test
+void test3() {
+	cout << endl;
+	cout << "======================================================" << "\n";
+	cout << "==================== BIG INT TEST ===================" << "\n";
+	cout << "======================================================" << "\n";
+	//srand(25);
+	srand(1);
+	vector<int> v;
+	for (int i = 0; i < 10000000; ++i) {
+		v.push_back(rand() % 5000);
+	}
+	radixSort(v.begin(), v.end(), [](int x) { return x; });
+   if (isSorted(v.begin(), v.end())) cout << "The collection is sorted" << endl;
+   else cout << "The collection is NOT sorted" << endl;
+	cout << endl;
+}
+
 

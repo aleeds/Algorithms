@@ -27,6 +27,9 @@ struct wrapper {
 template<typename T, typename K>
 void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin, T ctsend) {
 
+	vector<int> counts(256, 0);
+
+/*
 	cout << "=================================================\n";	
 	cout << "Original Collection:\n";
 	for (auto itr = begin; itr != end; ++itr)  {
@@ -39,9 +42,7 @@ void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin, T ctsend) {
 		cout << *(itr) << " ";
 	}
 	cout << "=================================================\n";	
-
 	//Create a vector with the count of each element in the original vector
-	vector<int> counts(256, 0);
 	cout << "=================================================\n";	
 	cout << "Counts: [";
 	for (T itr = counts.begin(); itr != counts.end(); ++itr) {	
@@ -49,6 +50,7 @@ void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin, T ctsend) {
 	}
 	cout << "]\n";
 	cout << "=================================================\n";	
+ */
 	for (T b = begin; b != end; ++b) {	
 		int key = keyFunc(*b);
 		if (key == 0) {
@@ -59,18 +61,27 @@ void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin, T ctsend) {
 			curVal = curVal & 0xff;
 			//wrapper<typename T::value_type> w(*b, keyFunc(*b));
 			//wrappers.push_back(w);
-			if (curVal != 0) {
+			//if (curVal != 0) {
 				counts[curVal] += 1;
-			}
+			//} else cout << "THERE IS A VALUE EQUAL TO ZERO: " << *b << "\n";
 		}
 	}
-
+/*
 	cout << "=================================================\n";	
-	//Make Cumulative
+	cout << "Counts: [";
 	for (T itr = counts.begin(); itr != counts.end(); ++itr) {	
+		cout << *itr << " ";
+	}
+	cout << "\n";
+	cout << "=================================================\n";	
+
+ */
+	//Make Cumulative
+	for (auto itr = counts.begin(); itr != counts.end(); ++itr) {	
 		if (itr != counts.begin())
 			*itr = *(itr-1) + *itr;
 	}
+/*
 	cout << "=================================================\n";	
 	cout << "Cummulative?\n";
 	cout << "Counts: [";
@@ -79,7 +90,6 @@ void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin, T ctsend) {
 	}
 	cout << "]\n";
 	cout << "=================================================\n";	
-/*
 	cout << "=================================================\n";	
 	cout << "CTS\n";
 	for (auto itr = ctsbegin; itr != ctsend; ++itr)  {
