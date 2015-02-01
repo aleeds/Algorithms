@@ -13,11 +13,6 @@ void HCR() {
   cin.getline(JunkString,255);
 }
 
-template<typename T> 
-T getPtrFromIndex(T begin, int i) {
-	return (begin + (i-1));
-}
-
 template<typename T>
 struct wrapper {
 	T origValue;	
@@ -30,9 +25,23 @@ struct wrapper {
 };
 
 template<typename T, typename K>
-void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin) {
+void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin, T ctsend) {
+
+	cout << "=================================================\n";	
+	cout << "Original Collection:\n";
+	for (auto itr = begin; itr != end; ++itr)  {
+		cout << *(itr) << " ";
+	}
+	cout << "=================================================\n";	
+	cout << "=================================================\n";	
+	cout << "CTS\n";
+	for (auto itr = ctsbegin; itr != ctsend; ++itr)  {
+		cout << *(itr) << " ";
+	}
+	cout << "=================================================\n";	
+
 	//Create a vector with the count of each element in the original vector
-	vector<int> counts(256);
+	vector<int> counts(256, 0);
 	cout << "=================================================\n";	
 	cout << "Counts: [";
 	for (T itr = counts.begin(); itr != counts.end(); ++itr) {	
@@ -44,24 +53,23 @@ void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin) {
 		int key = keyFunc(*b);
 		if (key == 0) {
 			++counts[0];
-		} else {
-			//wrapper<typename T::value_type> w(*b, keyFunc(*b));
-			//wrappers.push_back(w);
+		} 
+		else {
 			int curVal = key >> i; 
 			curVal = curVal & 0xff;
-			++counts[curVal];
+			//wrapper<typename T::value_type> w(*b, keyFunc(*b));
+			//wrappers.push_back(w);
+			if (curVal != 0) {
+				counts[curVal] += 1;
+			}
 		}
 	}
 
 	cout << "=================================================\n";	
-	cout << "Counts: [";
+	//Make Cumulative
 	for (T itr = counts.begin(); itr != counts.end(); ++itr) {	
-		cout << *itr << " ";
-	}
-	cout << "]\n";
-	cout << "=================================================\n";	
-	for (T itr = counts.begin(); itr != counts.end(); ++itr) {	
-		*itr = *(itr-1) + *itr;
+		if (itr != counts.begin())
+			*itr = *(itr-1) + *itr;
 	}
 	cout << "=================================================\n";	
 	cout << "Cummulative?\n";
@@ -71,29 +79,30 @@ void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin) {
 	}
 	cout << "]\n";
 	cout << "=================================================\n";	
+/*
 	cout << "=================================================\n";	
 	cout << "CTS\n";
-	for (int i = 0; i < (end - begin); ++i)  {
-		cout << *(ctsbegin+(i-1)) << " ";
+	for (auto itr = ctsbegin; itr != ctsend; ++itr)  {
+		cout << *(itr) << " ";
 	}
 	cout << "=================================================\n";	
 	HCR();
+*/
 	for (auto itr = end - 1; itr != begin - 1; --itr) {
 		//Gets cts index from counts
 		int key = keyFunc(*itr);
-		int ctsIndex = counts[key] - 1;	 
+		int curVal = key >> i; 
+		curVal = curVal & 0xff;
+		//int ctsIndex = counts[key] - 1;	 
+		int ctsIndex = counts[curVal];	 
 		//REPLACE THIS!!
-		T curPtr = getPtrFromIndex(ctsbegin, ctsIndex);
-		*curPtr = *itr;
+		if (ctsIndex != 0) {
+			T curPtr = ctsbegin + (ctsIndex-1);
+			*curPtr = *itr;
+			--counts[curVal];
+		} 
 		//--counts[keyFunc(*itr)];
-		--counts[key];
 	}
-	cout << "=================================================\n";	
-	cout << "CTS\n";
-	for (int i = 0; i < (end - begin); ++i)  {
-		cout << *(ctsbegin+(i-1)) << " ";
-	}
-	cout << "=================================================\n";	
 }
 
 template<typename T, typename K>
@@ -102,10 +111,10 @@ void radixSort(T begin, T end, K keyFunc) {
 	vector<typename T::value_type> cts(end-begin);	
 	//vector<wrapper<typename T::value_type>> wrappers;
 	//vector<wrapper<typename T::value_type>> wrappers;
-	//for (int i = 0; i < 1; ++i)  {
+	for (int i = 0; i < 4; ++i)  {
 		//countingSort(begin, end, keyFunc, i*8, cts.begin(), wrappers); 
-		countingSort(begin, end, keyFunc, 0, cts.begin()); 
-/*
+		countingSort(begin, end, keyFunc, i*8, cts.begin(), cts.end()); 
+		//countingSort(begin, end, keyFunc, 0, cts.begin(), cts.end()); 
 		auto cItr = cts.begin();
 		T itr = begin;
 		while (itr != end) {
@@ -113,5 +122,5 @@ void radixSort(T begin, T end, K keyFunc) {
 			++itr;
 			++cItr;
 		}
-	}*/
+	}
 }

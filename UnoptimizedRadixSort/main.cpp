@@ -39,10 +39,10 @@ void testCountingSort() {
 	cout << "========================================================" << "\n";
 	cout << "================== COUNTING SORT TEST ==================" << "\n";
 	cout << "========================================================" << "\n";
-   vector<int> v{1,5,2,4,3,7,9,6,10,8,2}; 
+   vector<int> v{1,5,2,4,3,7,9,6,10,8}; 
 	printVector(v);	
-	vector<int> cts(10);
-	//countingSort(v.begin(), v.end(), [](int x) { return x; }, 0, cts.begin());
+	vector<int> cts(v.end() - v.begin());
+	countingSort(v.begin(), v.end(), [](int x) { return x; }, 0, cts.begin(), cts.end());
 	printVector(cts);	
    if (isSorted(cts.begin(), cts.end())) cout << "The collection is sorted" << endl;
    else cout << "The collection is NOT sorted" << endl;
@@ -58,11 +58,11 @@ void startTests() {
   	clock_t end = clock();
   	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
 	cout << "==================================================" << "\n";
-  	//begin = clock();
-	//test3();
-  	//end = clock();
-  	//cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
-	//cout << "==================================================" << "\n";
+  	begin = clock();
+	test3();
+  	end = clock();
+  	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
+	cout << "==================================================" << "\n";
 }
 
 //Print Vector prints out the vector in a readable format
@@ -107,9 +107,9 @@ void test3() {
 	cout << "======================================================" << "\n";
 	cout << "==================== BIG INT TEST ====================" << "\n";
 	cout << "======================================================" << "\n";
-	srand(1);
+	srand(25);
 	vector<int> v;
-	for (int i = 0; i < 1000000; ++i) {
+	for (int i = 0; i < 100; ++i) {
 		v.push_back(rand() % 5000);
 	}
 	radixSort(v.begin(), v.end(), [](int x) { return x; });
