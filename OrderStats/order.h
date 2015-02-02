@@ -89,7 +89,7 @@ void insertion( T begin, T end, C &lt ) {
   }
 }
 
-template<typename T, typename C> typename T::value_type medianOfMedians(T begin, T end, const C &lt) {
+template<typename T, typename C> T medianOfMedians(T begin, T end, const C &lt) {
 /*
   cout << "======================================================\n";
   cout << "[";
@@ -124,16 +124,7 @@ template<typename T, typename C> typename T::value_type medianOfMedians(T begin,
       	 }
         } 
   }
-  return *begin; 
-}
-
-template<typename T>
-T getPtrFromValue(T begin, T end, typename T::value_type v) {
-	for (T itr = begin; itr != end; ++itr) {
-		if (*itr ==  v)
-			return itr;
-   }
-	return begin;
+  return begin; 
 }
 
 template<typename T,typename C,typename S>
@@ -142,8 +133,7 @@ T linearOrderStat(T begin, T end,C lt,S index) {
                                                            //std::cout << "One Element List: " << *begin << "\n";
     return begin;
   } else {
-    auto median = medianOfMedians(begin, end, lt);
-    auto pivot =  getPtrFromValue(begin, end, median);
+    auto pivot = medianOfMedians(begin, end, lt);
 	 
     linearPartition(begin, end, lt, pivot);
                                                            //std::cout << "=================================================\n";  
