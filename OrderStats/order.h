@@ -2,6 +2,7 @@
 #define ORDER
 
 #include <iostream>
+#include <iterator>
 #include <vector>
 
 using std::cout;
@@ -29,17 +30,6 @@ template<typename T, typename C> T randomizedPartition(T begin, T end, const C &
   }
   iter_swap(begin + i + 1, end - 1);
   return (begin + i + 1);
-}
-
-template<typename T, typename C> T minimum(T begin, T end, const C &lt) {
-	T min = begin;
-	for (auto i = begin; i != end; ++i) {
-		if (lt(*i, *min)) {
-			min = i;
-		}
-	}
-	return min;
-
 }
 
 template<typename T,typename C,typename S>
@@ -86,10 +76,16 @@ template<typename T, typename C> T linearPartition(T begin, T end, const C &lt, 
   return (begin + place + 1);
 }
 
-template<typename T, typename C> void insertion(T begin, T end, const C &lt) {
-  for (auto i = begin; i != end; ++i) {
-    auto hold = minimum(i, end,lt);
-    iter_swap(i, hold);
+template< typename T, typename C >  
+void insertion( T begin, T end, C &lt ) {  
+  for (T j = begin + 2; j != end; j++) {
+    T key = j;
+    T i = j-1;
+    while ((i != begin) && !lt(*i,*key)) {
+      std::iter_swap(i + 1, i);
+      i = i - 1;
+    }
+    std::iter_swap(i+1,key);
   }
 }
 
@@ -103,27 +99,32 @@ template<typename T, typename C> typename T::value_type medianOfMedians(T begin,
   cout << "]\n";
   cout << "======================================================\n";
 */
-  if ((end - begin) <= 5) {
-      return *(((end - begin) / 2) + begin);
-  }
-  int numSubs = (end - begin) / 5;
-  //std::vector<int> medians;
-  std::vector<typename T::value_type> medians;
+  int numSubs = ((end - begin) / 5);
   if((end - begin) % 5 != 0) ++numSubs;
-  for(int i = 0; i < numSubs; ++i) {
-	 int startingIndex = (5 * i);
-	 T curStart = begin + startingIndex;
-    T curEnd;
-	 if (i == numSubs - 1) {
-		 curEnd = end;
-	    medians.push_back(*(((end - curStart) / 2) + curStart));
-	 } else {
-		 curEnd = curStart + 4;
-		 insertion(curStart, curEnd, lt);
-		 medians.push_back(*(curStart+2));
-	 }
-  } 
-  return medianOfMedians(medians.begin(), medians.end(), lt); 
+  std::vector<T*> medians(end-begin + 1);
+  T* newSubMedian;
+  while(numSubs > 1) {
+    --numSubs;
+        for(int i = 0; i < numSubs; ++i) {
+      	 int startingIndex = (5 * i);
+      	 T curStart = begin + startingIndex;
+          T curEnd;
+      	 if (i == numSubs - 1) {
+      		 curEnd = end;
+           insertion(curStart, curEnd, lt);
+           auto temp = (((end - curStart) / 2) + curStart);
+           newSubMedian = &temp;
+      	   *(medians.begin() + i) = newSubMedian;
+      	 } else {
+      		 curEnd = curStart + 4;
+      		 insertion(curStart, curEnd, lt);
+           auto temp = curStart+2;
+           newSubMedian = &temp;
+      		 *(medians.begin() + i) = newSubMedian;
+      	 }
+        } 
+  }
+  return *begin; 
 }
 
 template<typename T>
