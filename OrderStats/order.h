@@ -106,6 +106,7 @@ template<typename T, typename C> T minimum(T begin, T end, const C &lt) {
   return min;
 }
 
+
 template<typename T, typename C> void insertion(T begin, T end, const C &lt) {
   for (auto i = begin; i != end; ++i) {
     auto hold = minimum(i, end,lt);
