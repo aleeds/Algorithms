@@ -1,33 +1,22 @@
-#include <iostream>
+// #include <iostream>
 #include <vector>
 
-using std::cout;
-using std::cin;
-using std::vector;
+// using std::cout;
+// using std::cin;
+// using std::vector;
 
-void HCR() {
-  char JunkString[255];
+// void HCR() {
+//   char JunkString[255];
 
-// cin.flush();
-  cout << " <Hit Carriage Return To Continue>\n";
-  cin.getline(JunkString,255);
-}
-
-template<typename T>
-struct wrapper {
-	T origValue;	
-	int keyValue;
-	wrapper() {}
-	wrapper(T p, int v) {
-		origValue = p;
-		keyValue = v;
-	}
-};
+// // cin.flush();
+//   cout << " <Hit Carriage Return To Continue>\n";
+//   cin.getline(JunkString,255);
+// }
 
 template<typename T, typename K>
 void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin, T ctsend) {
 
-	vector<int> counts(256, 0);
+	std::vector<int> counts(256, 0);
 
 /*
 	cout << "=================================================\n";	
@@ -59,8 +48,6 @@ void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin, T ctsend) {
 		else {
 			int curVal = key >> i; 
 			curVal = curVal & 0xff;
-			//wrapper<typename T::value_type> w(*b, keyFunc(*b));
-			//wrappers.push_back(w);
 			//if (curVal != 0) {
 				counts[curVal] += 1;
 			//} else cout << "THERE IS A VALUE EQUAL TO ZERO: " << *b << "\n";
@@ -78,8 +65,9 @@ void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin, T ctsend) {
  */
 	//Make Cumulative
 	for (auto itr = counts.begin(); itr != counts.end(); ++itr) {	
-		if (itr != counts.begin())
-			*itr = *(itr-1) + *itr;
+		auto prev =  *(itr - 1);
+		if (itr != counts.begin() && prev != 0)
+			*itr = prev + *itr;
 	}
 /*
 	cout << "=================================================\n";	
@@ -117,14 +105,10 @@ void countingSort(T begin, T end, K keyFunc, int i, T ctsbegin, T ctsend) {
 
 template<typename T, typename K>
 void radixSort(T begin, T end, K keyFunc) {
-
-	vector<typename T::value_type> cts(end-begin);	
-	//vector<wrapper<typename T::value_type>> wrappers;
-	//vector<wrapper<typename T::value_type>> wrappers;
+  
+	std::vector<typename T::value_type> cts(end-begin);	
 	for (int i = 0; i < 4; ++i)  {
-		//countingSort(begin, end, keyFunc, i*8, cts.begin(), wrappers); 
 		countingSort(begin, end, keyFunc, i*8, cts.begin(), cts.end()); 
-		//countingSort(begin, end, keyFunc, 0, cts.begin(), cts.end()); 
 		auto cItr = cts.begin();
 		T itr = begin;
 		while (itr != end) {
