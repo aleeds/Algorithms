@@ -73,8 +73,8 @@ void test1() {
 	cout << "================= SMALL KNAPSACK TEST ==================" << "\n";
 	cout << "========================================================" << "\n";
 	int weightLimit = 5;
-	const vector<int> weights{3,2,1};
-	const vector<double> values{5,3,4};
+	const vector<int> weights{2,3,4,5};
+	const vector<double> values{3,4,5,6};
 	vector<int> sValues{0,2};
 	vector<int> tValues{0,2};
 	pair<double, vector<int>> solution(9.0, sValues);
