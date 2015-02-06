@@ -30,6 +30,7 @@ int main(int argc, char* argv[]) {
   return 0;
 }
 
+
 void startTests() {
   cout << "==================================================" << "\n";
   cout << "=================== ORDER STATS ===================" << "\n";
@@ -79,7 +80,6 @@ bool isSorted(T begin, T end) {
   return true;
 }
 
-
 //Small int test
 void test1() {
 
@@ -87,9 +87,10 @@ void test1() {
   cout << "========================================================" << "\n";
   cout << "======================= MEDIAN TEST ====================" << "\n";
   cout << "========================================================" << "\n";
-  //vector<int> v1{1,5,4,7,3,9,2,6,8}; 
-  //cout << "Median of Medians: " << medianOfMedians(v1.begin(), v1.end(), less) << "\n";
-
+  vector<int> vec{1,5,4,7,3,9,2,6,8}; 
+  insertion(vec.begin(),vec.end(),less);
+  printVector(vec);
+  // cout << "Median of Medians: " << *medianOfMedians(vec.begin(), vec.end(), less) << "\n";
 
   cout << endl;
   cout << "========================================================" << "\n";
@@ -100,6 +101,7 @@ void test1() {
   printVector(v);
   auto orderAns = randomOrderStat(v.begin(),v.end(),less, index);
   vector<int> v1{10,5,24,47,3,7,19,20,201,45,63,41}; 
+  // vector<int> v1{1, 7, 5, 2, 3}; 
   printVector(v1);
   auto selectAns = linearOrderStat(v1.begin(),v1.end(),less, index);
   cout << "Vectors After Stat\n";
@@ -164,7 +166,7 @@ void test3() {
   vector<string> v1{"c","b","a","d","z","t","w"};
   int index = 5; 
   auto orderAns = randomOrderStat(v.begin(),v.end(), [](string x, string y) { return (x<y);}, index);
-  auto selectAns = linearOrderStat(v.begin(),v.end(), [](string x, string y) { return (x<y);}, index);
+  auto selectAns = linearOrderStat(v1.begin(),v1.end(), [](string x, string y) { return (x<y);}, index);
   sort(v.begin(), v.end());
   sort(v1.begin(), v1.end());
   string realAns = v[index];
@@ -186,8 +188,8 @@ void test4() {
   vector<int> v;
   vector<int> v2;
   for (int i = 0; i < 10000000; ++i) {
-    v.push_back(rand() % 5000000);
-    v2.push_back(rand() % 5000000);
+    v.push_back(rand() % 50000);
+    v2.push_back(rand() % 50000);
   }
   int index = 100; 
   auto orderAns = randomOrderStat(v.begin(),v.end(),less, index);
