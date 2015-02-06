@@ -1,0 +1,43 @@
+========================= DYNAMIC PROGRAMMING ===========================
+
+When many subtrees are identical, you want to eliminate repeated work. 
+Dynamic Programming does this by storing values in a table to look
+up later. Often used for optimization problems. 
+
+If a problem has subtrees that are identical, and a solution is built
+from a combination of solutions to smaller problems, then it has the PRINCIPLE OF OPTIMALITY
+
+Comput values by fillin in table. Generally from the bottom up.
+
+f(n) = { 1 n < 2, f(n-1) + f(n-2) }
+
+[0,x,x,x,x,x,x,x,x,x]
+[0,1,x,x,x,x,x,x,x,x]
+[0,1,2,x,x,x,x,x,x,x]
+[0,1,2,3,x,x,x,x,x,x]
+[0,1,2,3,5,x,x,x,x,x]
+
+Rod Cutting Problem -
+
+You are selling rods of metal. you get rods in a particular length and have prices
+for rods of different lengths. What is the optimal cut to maximize revenues?
+
+How much someone pays for something of length 1,2,3,4 etc...
+c(n) = [x,x,x,x,x,x,x,x,x,x]
+
+f(n) { c(1) n = 1, c(n) = max (c(1) + f(n-1)) + max (c(2) + f(n-2)) + ... }
+
+Which really is...
+
+f(n) { c(1) n = 1, c(n) = max(c(n),c(i) + f(n-i)) }
+
+The difference between DP and memoziation is that Memoziation starts at the top and 
+uses recursion to go down. DP starts at the bottom.
+
+However many arguments you pass in, that is how many dimensions you have in your table
+
+Longest Common Subsequence
+Recurrence Relation
+f(n,m) = { 0 n < 0, 11 m < 0, 1 + f(n-1,m-1) s1(m) == s2(m), max(f(n-1,m),f(n,m-1)) }
+
+

@@ -1,0 +1,159 @@
+#include<iostream>
+#include<queue>
+#include<vector>
+#include<functional>
+
+using std::cout;
+using std::cin;
+using std::vector;
+
+void HCR() {
+  char JunkString[255];
+
+// cin.flush();
+  cout << " <Hit Carriage Return To Continue>\n";
+  cin.getline(JunkString,255);
+}
+
+void printQ(std::priority_queue<double, std::vector<double>, std::greater<double> > pq) {
+	cout << "Queue: [";
+	while (!pq.empty()) {
+		cout << pq.top() << ", ";
+		pq.pop();
+	}
+	cout << "]\n";
+}
+
+template<typename T>
+T getPtrFromIndex(T begin, int i) {
+   return (begin + (i-1));
+}
+
+int getLeftChildIndex(int pIndex, int hpSize) {
+   int childIndex = (pIndex*2);
+   if (childIndex <= hpSize)
+      return childIndex;
+   else
+      return -1;
+}
+
+int getRightChildIndex(int pIndex, int hpSize) {
+   int childIndex = (pIndex*2)+1;
+   if (childIndex <= hpSize)
+      return childIndex;
+   else
+      return -1;
+}
+
+template<typename T>
+void swapValues(T itrA, T itrB) {
+   auto temp = *itrA;
+   *itrA = *itrB;
+   *itrB = temp;
+}
+
+template<typename T>
+void maxHeapify(T begin, int i, int hpSize) {
+   if (i > 0 && i < hpSize) {
+      int lIndex = getLeftChildIndex(i, hpSize);
+      int rIndex = getRightChildIndex(i, hpSize);
+      if (lIndex == -1 && rIndex == -1) //Its a leaf
+         return;
+      int smallestIndex = i;
+      T parentPtr = getPtrFromIndex(begin, i);
+      T smallest = parentPtr;
+      T leftPtr;
+      T rightPtr;
+      if (lIndex != -1)
+         leftPtr = getPtrFromIndex(begin, lIndex);
+      if (rIndex != -1)
+         rightPtr = getPtrFromIndex(begin, rIndex);
+      if (lIndex != -1 && *leftPtr < *parentPtr) {
+         smallest = leftPtr;
+         smallestIndex = lIndex;
+      }
+      if (rIndex != -1 && *rightPtr < *smallest) {
+         smallest = rightPtr;
+         smallestIndex = rIndex;
+      }
+      if (smallestIndex != i) {
+         swapValues(parentPtr, smallest);
+         maxHeapify(begin, smallestIndex, hpSize);
+      }
+   }
+}
+
+template<typename T>
+class PQ {
+	private:
+		vector<T> v;
+	public:
+		void pop() {
+			T temp = v[(v.size()-1)];	
+			if (!v.empty()) {
+				v.erase(v.end()-1);
+				v[0] = temp;
+				maxHeapify(v.begin(), 1, v.size());
+			}
+		}
+		T top() {
+			return v[0];
+		}
+		void push(T elem) {
+			v.push_back(elem);	
+			maxHeapify(v.begin(), 1, v.size());
+		}
+		bool empty() {
+			return (v.size());
+		}
+};
+
+void splitCells(int &numCells, std::priority_queue<double, std::vector<double>, std::greater<double> > &pq, double endTime, double &curTime, double minSplit, double maxSplit) {
+	//cout << "==============================================\n";
+	//cout << "Num Cells: " << numCells << "\n";
+	//cout << "Cur Time: " << curTime << " End Time: " << endTime << "\n";
+	//printQ(pq);
+//	HCR();
+	//cout << "==============================================\n";
+	if (!pq.empty()) {
+		curTime = pq.top();
+		pq.pop();
+		if ((curTime + minSplit) <= endTime) {
+			double splitTime = minSplit + rand()*(maxSplit-minSplit)/RAND_MAX; 
+			if (splitTime + curTime <= endTime) {
+				pq.push(splitTime + curTime);
+			}
+			splitTime = minSplit + rand()*(maxSplit-minSplit)/RAND_MAX; 
+			if (splitTime + curTime <= endTime) {
+				pq.push(splitTime + curTime);
+			}
+		}
+		++numCells;
+		splitCells(numCells, pq, endTime, curTime, minSplit, maxSplit);
+	}
+}
+
+int numCells(double endTime, double minSplit, double maxSplit) {
+
+	double curTime{0.0};
+	int numCells{2};
+	std::priority_queue<double, std::vector<double>, std::greater<double> > pq;
+	double splitTime;
+	splitTime = minSplit + rand()*(maxSplit-minSplit)/RAND_MAX; 
+	if (splitTime + curTime <= endTime) {
+		pq.push(splitTime);
+	}
+	splitTime = minSplit + rand()*(maxSplit-minSplit)/RAND_MAX; 
+	if (splitTime + curTime <= endTime) {
+		pq.push(splitTime);
+	}
+	//cout << "==============================================\n";
+	//cout << "Num Cells: " << numCells << "\n";
+	//cout << "Cur Time: " << curTime << " End Time: " << endTime << "\n";
+	//printQ(pq);
+	//HCR();
+	//cout << "==============================================\n";
+	//splitCells(numCells, pq, endTime, curTime, minSplit, maxSplit);
+	
+	return numCells;
+}
