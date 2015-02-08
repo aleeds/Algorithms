@@ -23,6 +23,7 @@ void startTests();
 void test1();
 void test2();
 void test3();
+void test4();
 
 int main(int argc, char* argv[]) {
 	startTests();
@@ -40,6 +41,7 @@ void startTests() {
   	clock_t end = clock();
   	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
 	cout << "========================================================" << "\n";
+/*
   	begin = clock();
 	test2();
   	end = clock();
@@ -50,6 +52,12 @@ void startTests() {
   	end = clock();
   	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
 	cout << "========================================================" << "\n";
+  	begin = clock();
+	test4();
+  	end = clock();
+  	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
+	cout << "========================================================" << "\n";
+*/
 }
 
 //Print Vector prints out the vector in a readable format
@@ -73,6 +81,14 @@ bool isSorted(T begin, T end) {
 	return true;
 }
 
+double getMaxValue(vector<int> indexes, vector<double> values) {
+	double sum = 0;
+	for (auto itr = indexes.begin(); itr != indexes.end(); ++itr) {
+		sum += values[*itr]; 
+	}
+	return sum;
+}
+
 bool indexesAddToMax(double maxValue, vector<int> indexes, vector<double> values) {
 	double sum = 0;
 	for (auto itr = indexes.begin(); itr != indexes.end(); ++itr) {
@@ -89,9 +105,9 @@ void test1() {
 	cout << "========================================================" << "\n";
 	int weightLimit = 5;
 	const vector<int> weights{2,3,4,5};
-	const vector<double> values{3,4,5,6};
+	const vector<double> values{3.1,4.1,5.1,6.1};
 	vector<int> iValues{1,0};
-	pair<double, vector<int>> solution(7.0, iValues);
+	pair<double, vector<int>> solution(7.2, iValues);
 	pair<double, vector<int>> result = knapsack(weightLimit, weights, values);
 	cout << "Max Value: " << result.first << endl; 
 	cout << "Values: [";
@@ -154,13 +170,12 @@ void test4() {
 	cout << "========================================================" << "\n";
 	cout << "=================== RAND KNAPSACK TEST =================" << "\n";
 	cout << "========================================================" << "\n";
-	srand(20);
 	int weightLimit = 5000;
 	vector<int> weights;
 	vector<double> values;
 	for (int i = 0; i < 10000; ++i) {
 		int tempWeight = rand() % 5000;
-		double tempValue = rand() % 5000;
+		double tempValue = rand() % 5000 + (double)rand()/RAND_MAX;
 		weights.push_back(tempWeight); 
 		values.push_back(tempValue);
 	}
@@ -169,13 +184,20 @@ void test4() {
 	//pair<double, vector<int>> solution(13549094, iValues); 
 	pair<double, vector<int>> result = knapsack(weightLimit, weights, values);
 	cout << "Max Value: " << result.first << endl; 
-	cout << "Values: [";
+	cout << "Indices: [";
 	for (auto itr = result.second.begin(); itr != result.second.end(); ++itr) {
 		cout << *itr << " ";
 	}
 	cout << "]" << endl;
 	//(solution == result)? cout << "PASSED" << endl : cout << "FAILED" << endl;
-	(indexesAddToMax(result.first, result.second, values))? cout << "PASSED, ADD TO MAX" << endl : cout << "FAILED" << endl;
+	//((double)result.first == (double)getMaxValue(result.second, values))? cout << "PASSED, ADD TO MAX" << endl : cout << "FAILED" << endl;
+	double r = (double)result.first;
+	cout << "Max Value Computed from Knapsack: " << r << endl;
+	double m = (double)getMaxValue(result.second, values);
+	cout << "Max Value Computed from Indices: " << m << endl;
+	//((double)result.first == (double)getMaxValue(result.second, values))? cout << "PASSED, ADD TO MAX" << endl : cout << "FAILED" << endl;
+	if (m == r) cout << "PASSED" << endl;
+	else cout << "FAILED" << endl;
 }
 
 //Big Int Test

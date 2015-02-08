@@ -28,7 +28,7 @@ void printKeepSack(vector<vector<pair<double,int>>> ks) {
 
 pair<double,vector<int>> knapsack(int weightLimit, const vector<int> &weights, const vector<double> &values) {
 
-	pair<double,int> initialPair(0,0);
+	pair<double,int> initialPair(0.0,0);
 	vector<pair<double,int>> temp(weights.size() + 1, initialPair);
 	//Current Knapsack Table
 	vector<vector<pair<double,int>>> vArr(weightLimit + 1, temp);
@@ -39,7 +39,7 @@ pair<double,vector<int>> knapsack(int weightLimit, const vector<int> &weights, c
 
 	for (int i = 1; i <= weights.size(); ++i)  {
 		int weight = weights[i-1];
-		int value = values[i-1];
+		double value = values[i-1];
 		for (int w = 1; w < vArr.size(); ++w) {
 			if (weight <= w) {
 				if (value + vArr[w-weight][i-1].first > vArr[w][i-1].first) {
@@ -51,10 +51,13 @@ pair<double,vector<int>> knapsack(int weightLimit, const vector<int> &weights, c
 			} else {
 				vArr[w][i].first = vArr[w][i-1].first;
 			}
-	//		printKnapSackValues(vArr);
+			//printKnapSackValues(vArr);
 		}
 		//cout << "\n"; 
 	}
+
+	printKnapSackValues(vArr);
+	printKeepSack(vArr);
 
 	//Filling up the knapsack
 	vector<int> keepIndexes;	
