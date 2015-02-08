@@ -6,11 +6,21 @@ using std::vector;
 using std::cout;
 using std::cin;
 
-void printKnapSack(vector<vector<double>> ks) {
+void printKnapSackValues(vector<vector<pair<double,int>>> ks) {
 		cout << "\n"; 
-	for (auto i = 0; i < ks[0].size(); ++i)  {
-		for (auto j = 0; j < ks.size(); ++j) {
-			cout << ks[j][i] << " ";
+	for (int i = 0; i < ks[0].size(); ++i)  {
+		for (int j = 0; j < ks.size(); ++j) {
+			cout << ks[j][i].first << " ";
+		}
+		cout << "\n"; 
+	}
+}
+
+void printKeepSack(vector<vector<pair<double,int>>> ks) {
+		cout << "\n"; 
+	for (int i = 0; i < ks[0].size(); ++i)  {
+		for (int j = 0; j < ks.size(); ++j) {
+			cout << ks[j][i].second << " ";
 		}
 		cout << "\n"; 
 	}
@@ -18,36 +28,52 @@ void printKnapSack(vector<vector<double>> ks) {
 
 pair<double,vector<int>> knapsack(int weightLimit, const vector<int> &weights, const vector<double> &values) {
 
-	vector<double> temp(weights.size() + 1, 0);
+	pair<double,int> initialPair(0,0);
+	vector<pair<double,int>> temp(weights.size() + 1, initialPair);
 	//Current Knapsack Table
-	vector<vector<double>> vArr(weightLimit + 1, temp);
+	vector<vector<pair<double,int>>> vArr(weightLimit + 1, temp);
 	//Keep Value Knapsack Table
 	//vector<vector<double>> kArr(weightLimit + 1, temp);
-	printKnapSack(vArr); 
-	cout << "\n";
+	//printKnapSackValues(vArr); 
+	//cout << "\n";
 
 	for (int i = 1; i <= weights.size(); ++i)  {
 		int weight = weights[i-1];
 		int value = values[i-1];
 		for (int w = 1; w < vArr.size(); ++w) {
 			if (weight <= w) {
-				if (value + vArr[w-weight][i-1] > vArr[w][i-1]) {
-					vArr[w][i] = value + vArr[w-weight][i-1];
+				if (value + vArr[w-weight][i-1].first > vArr[w][i-1].first) {
+					vArr[w][i].first = value + vArr[w-weight][i-1].first;
+					vArr[w][i].second = 1;
 				} else {
-					vArr[w][i] = vArr[w][i-1];
+					vArr[w][i].first = vArr[w][i-1].first;
 				}
 			} else {
-				vArr[w][i] = vArr[w][i-1];
+				vArr[w][i].first = vArr[w][i-1].first;
 			}
-			printKnapSack(vArr);
+	//		printKnapSackValues(vArr);
 		}
-		cout << "\n"; 
+		//cout << "\n"; 
 	}
-	
 
-	printKnapSack(vArr);
+	//Filling up the knapsack
+	vector<int> keepIndexes;	
+	int w = weightLimit;
+	int i = weights.size();
+	while(w > 0 && i > 0) {
+		if (vArr[w][i].second == 1) { //Put in knapsack
+			keepIndexes.push_back(i-1);
+			w -= weights[i-1];
+		} 
+		i -= 1;
+	}
 
-	//vector<int> v;
-	pair<double, vector<int>> p;
-	return p; 
+	//printKnapSackValues(vArr);
+	//printKeepSack(vArr);
+
+	pair<double, vector<int>> ks;
+	ks.first = vArr[weightLimit][weights.size()].first;
+	ks.second = keepIndexes;
+
+	return ks; 
 }
