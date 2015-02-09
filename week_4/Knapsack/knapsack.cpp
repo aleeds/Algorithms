@@ -42,7 +42,7 @@ pair<double,vector<int>> knapsack(int weightLimit, const vector<int> &weights, c
 		double value = values[i-1];
 		for (int w = 1; w < vArr.size(); ++w) {
 			if (weight <= w) {
-				if (value + vArr[w-weight][i-1].first > vArr[w][i-1].first) {
+				if (value + vArr[w-weight][i-1].first >= vArr[w][i-1].first) {
 					vArr[w][i].first = value + vArr[w-weight][i-1].first;
 					vArr[w][i].second = 1;
 				} else {
@@ -56,8 +56,8 @@ pair<double,vector<int>> knapsack(int weightLimit, const vector<int> &weights, c
 		//cout << "\n"; 
 	}
 
-	printKnapSackValues(vArr);
-	printKeepSack(vArr);
+	//printKnapSackValues(vArr);
+	//printKeepSack(vArr);
 
 	//Filling up the knapsack
 	vector<int> keepIndexes;	

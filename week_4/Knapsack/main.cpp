@@ -41,7 +41,6 @@ void startTests() {
   	clock_t end = clock();
   	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
 	cout << "========================================================" << "\n";
-/*
   	begin = clock();
 	test2();
   	end = clock();
@@ -52,12 +51,13 @@ void startTests() {
   	end = clock();
   	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
 	cout << "========================================================" << "\n";
+	/*
   	begin = clock();
 	test4();
   	end = clock();
   	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
 	cout << "========================================================" << "\n";
-*/
+	*/
 }
 
 //Print Vector prints out the vector in a readable format
@@ -105,9 +105,9 @@ void test1() {
 	cout << "========================================================" << "\n";
 	int weightLimit = 5;
 	const vector<int> weights{2,3,4,5};
-	const vector<double> values{3.1,4.1,5.1,6.1};
+	const vector<double> values{3,4,5,6};
 	vector<int> iValues{1,0};
-	pair<double, vector<int>> solution(7.2, iValues);
+	pair<double, vector<int>> solution(7, iValues);
 	pair<double, vector<int>> result = knapsack(weightLimit, weights, values);
 	cout << "Max Value: " << result.first << endl; 
 	cout << "Values: [";
@@ -170,11 +170,14 @@ void test4() {
 	cout << "========================================================" << "\n";
 	cout << "=================== RAND KNAPSACK TEST =================" << "\n";
 	cout << "========================================================" << "\n";
+	cout << "Adding test: " << endl;
+	cout << " 5.3 + 3.3 = " << (5.3 + 3.3) << endl;
+	cout << "========================================================" << "\n";
 	int weightLimit = 5000;
 	vector<int> weights;
 	vector<double> values;
-	for (int i = 0; i < 10000; ++i) {
-		int tempWeight = rand() % 5000;
+	for (int i = 0; i < 8000; ++i) {
+		int tempWeight = rand() % 500;
 		double tempValue = rand() % 5000 + (double)rand()/RAND_MAX;
 		weights.push_back(tempWeight); 
 		values.push_back(tempValue);
