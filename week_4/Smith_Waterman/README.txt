@@ -1,1 +1,11 @@
-** Program Description goes here **
+This problem is a relative of the longest common subsequence problem. Unlike DNA, RNA does not automatically include a second strand of bases that are matched up. As a result, RNA strands tend to fold back on themselves so that one piece of the strand will match up with a second piece of the strand in a way so that the base pairs match up. You can see examples of this here and here. As with DNA, there are four bases in RNA. These are typically denoted as C, G, A, and U. The meaning of the letters isn't significant to us. What does matter is that C and G like to match up and A and U like to match up.
+
+To keep things simple, I don't want you to have to worry about a lot of the details of loops or gaps in the chaining. Instead, you are to write a function that takes a string of bases (everything will be 'C', 'G', 'A', or 'U') and returns the maximum number of base pairs that can be matched up. Your matching can have "bubbles" in it or skip arbitrary numbers of bases before it bends back around. So if the string you were given were "CCACUGAACAGUG" your answer would be 5 because the CACUG near the beginning matches up with the reverse of CAGUG at the end. Note that because all I am asking for is the maximum number of matching bases, you can make some of the assumptions that help the LCS algorithm in terms of efficiency.
+
+As a longer example, the first figure I linked to above would correspond to the string "ACGUGCCACGAUUCAACGUGGCACAG". While the picture shows 8 pairs matched up, the method I am asking you to program would return 11 on that string because it would match the two Us in the loop with two of the As the the C with the G in the loose ends. Your function should have the following signature.
+
+int matchingBases(string strand);
+
+You can only have one "loop". This simplification allows you to starting walking from both ends of the string heading toward one another and only skip non-matches. The maximum input is 40,000 characters long.
+
+Note that this isn't templated so you will submit a .cpp with a name of your choosing. I will include the function declaration in my test code. The .cpp file should have the function above as well as whatever other functions it needs, but not a main.
