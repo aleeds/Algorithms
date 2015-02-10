@@ -42,7 +42,7 @@ pair<double,vector<int>> knapsack(int weightLimit, const vector<int> &weights, c
 		double value = values[i-1];
 		for (int w = 1; w < vArr.size(); ++w) {
 			if (weight <= w) {
-				if (value + vArr[w-weight][i-1].first >= vArr[w][i-1].first) {
+				if (value + vArr[w-weight][i-1].first > vArr[w][i-1].first) {
 					vArr[w][i].first = value + vArr[w-weight][i-1].first;
 					vArr[w][i].second = 1;
 				} else {
@@ -79,4 +79,28 @@ pair<double,vector<int>> knapsack(int weightLimit, const vector<int> &weights, c
 	ks.second = keepIndexes;
 
 	return ks; 
+}
+
+
+double kpHelper(double max, int tw, int weightLimit, const vector<int> &weights, const vector<double> &values, int i) { 
+	//Choose a value
+	int weight = weights[i];
+	double value = values[i];
+	if (tw + weight <= weightLimit) {
+		tw += weight;
+		max += value;
+	} else {
+		return max;
+	}
+	//Recurse on other values
+	double tempMax = max;
+	while (i != weights.size())  {
+		++i;
+		tempMax = std::max(tempMax, kpHelper(max, tw, weightLimit, weights, values, i));
+	}
+	return tempMax;
+}
+
+double knapsackRecursive(int weightLimit, const vector<int> &weights, const vector<double> &values) { 
+	return kpHelper(0, 0, weightLimit, weights, values, 0);
 }

@@ -18,6 +18,7 @@ template<typename T>
 bool isSorted(T begin, T end);
 
 pair<double,vector<int>> knapsack(int weightLimit, const vector<int> &weights, const vector<double> &values);
+double knapsackRecursive(int weightLimit, const vector<int> &weights, const vector<double> &values);
 
 void startTests();
 void test1();
@@ -41,6 +42,7 @@ void startTests() {
   	clock_t end = clock();
   	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
 	cout << "========================================================" << "\n";
+/*
   	begin = clock();
 	test2();
   	end = clock();
@@ -51,13 +53,12 @@ void startTests() {
   	end = clock();
   	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
 	cout << "========================================================" << "\n";
-	/*
   	begin = clock();
 	test4();
   	end = clock();
   	cout << "Execution Time: " <<  double(end - begin) / CLOCKS_PER_SEC << " seconds" <<endl;
 	cout << "========================================================" << "\n";
-	*/
+*/
 }
 
 //Print Vector prints out the vector in a readable format
@@ -109,7 +110,9 @@ void test1() {
 	vector<int> iValues{1,0};
 	pair<double, vector<int>> solution(7, iValues);
 	pair<double, vector<int>> result = knapsack(weightLimit, weights, values);
+	double recMax = knapsackRecursive(weightLimit, weights, values);
 	cout << "Max Value: " << result.first << endl; 
+	cout << "RecMax Value: " << recMax << endl; 
 	cout << "Values: [";
 	for (auto itr = result.second.begin(); itr != result.second.end(); ++itr) {
 		cout << *itr << " ";
@@ -131,7 +134,9 @@ void test2() {
 	vector<int> iValues{6,3,1};
 	pair<double, vector<int>> solution(1735, iValues);
 	pair<double, vector<int>> result = knapsack(weightLimit, weights, values);
+	double recMax = knapsackRecursive(weightLimit, weights, values);
 	cout << "Max Value: " << result.first << endl; 
+	cout << "RecMax Value: " << recMax << endl; 
 	cout << "Values: [";
 	for (auto itr = result.second.begin(); itr != result.second.end(); ++itr) {
 		cout << *itr << " ";
@@ -153,7 +158,9 @@ void test3() {
 	vector<int> iValues{14,13,8,7,6,4,2,0};
 	pair<double, vector<int>> solution(1458, iValues);
 	pair<double, vector<int>> result = knapsack(weightLimit, weights, values);
+	double recMax = knapsackRecursive(weightLimit, weights, values);
 	cout << "Max Value: " << result.first << endl; 
+	cout << "RecMax Value: " << recMax << endl; 
 	cout << "Values: [";
 	for (auto itr = result.second.begin(); itr != result.second.end(); ++itr) {
 		cout << *itr << " ";
@@ -170,15 +177,12 @@ void test4() {
 	cout << "========================================================" << "\n";
 	cout << "=================== RAND KNAPSACK TEST =================" << "\n";
 	cout << "========================================================" << "\n";
-	cout << "Adding test: " << endl;
-	cout << " 5.3 + 3.3 = " << (5.3 + 3.3) << endl;
-	cout << "========================================================" << "\n";
-	int weightLimit = 5000;
+	int weightLimit = 500;
 	vector<int> weights;
 	vector<double> values;
-	for (int i = 0; i < 8000; ++i) {
+	for (int i = 0; i < 80; ++i) {
 		int tempWeight = rand() % 500;
-		double tempValue = rand() % 5000 + (double)rand()/RAND_MAX;
+		double tempValue = rand() % 500 + (double)rand()/RAND_MAX;
 		weights.push_back(tempWeight); 
 		values.push_back(tempValue);
 	}
@@ -186,7 +190,9 @@ void test4() {
 	//std::reverse(iValues.begin(), iValues.end());
 	//pair<double, vector<int>> solution(13549094, iValues); 
 	pair<double, vector<int>> result = knapsack(weightLimit, weights, values);
+	double recMax = knapsackRecursive(weightLimit, weights, values);
 	cout << "Max Value: " << result.first << endl; 
+	cout << "RecMax Value: " << recMax << endl; 
 	cout << "Indices: [";
 	for (auto itr = result.second.begin(); itr != result.second.end(); ++itr) {
 		cout << *itr << " ";
