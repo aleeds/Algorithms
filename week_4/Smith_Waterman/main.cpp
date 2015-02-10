@@ -10,7 +10,7 @@ using std::string;
 using std::pair;
 
 #define endl "\n"
-#define DIAGNOSTIC_LEVEL 1
+#define DIAGNOSTIC_LEVEL 0
 
 template<typename T>
 void printVector(vector<T> v);
@@ -24,6 +24,14 @@ void printVector(vector<T> v) {
 	}
 	cout << endl;
 }
+
+
+int matchingBases(string strand);
+
+int recursiveMatches(string strand);
+
+
+
 
 void startTests();
 void test1();
@@ -129,6 +137,15 @@ void test1() {
 	cout << "========================================================" << "\n";
 	cout << "========================================================" << "\n";
 	cout << "========================================================" << "\n";
+
+	int result = matchingBases("CCACUGAACAGUG"); 
+	(result == 5) ? cout << "PASSED" << endl : cout <<"FAILED" << endl;
+
+	result = recursiveMatches("CCACUGAACAGUG"); 
+	cout << result << endl;
+	(result == 5) ? cout << "PASSED" << endl : cout <<"FAILED" << endl;
+
+
 }
 
 void test2() {
@@ -136,6 +153,9 @@ void test2() {
 	cout << "========================================================" << "\n";
 	cout << "========================================================" << "\n";
 	cout << "========================================================" << "\n";
+
+	(matchingBases("ACGUGCCACGAUUCAACGUGGCACAG") == 11) ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	(recursiveMatches("ACGUGCCACGAUUCAACGUGGCACAG") == 11) ? cout << "PASSED" << endl : cout << "FAILED" << endl;
 }
 
 void test3() {
