@@ -2,6 +2,7 @@
 #include <algorithm>
 using std::cout;
 using std::string;
+using std::vector;
 //using std::reverse;
 using std::endl;
 
@@ -15,9 +16,6 @@ string reverse (string s) {
 } 
 return result; 
 }
-
-
-
 
 int match_count(string left, string right) {
 
@@ -38,7 +36,6 @@ int matchingBases(string strand) {
 
 	return length;
 }
-
 
 int recursiveMatches(string strand) {
 	int length = strand.length();
@@ -71,6 +68,25 @@ int recursiveMatches(string strand) {
 	return max;
 }
 
+int lcs(const string &s1, const string &s2, int m, int n) {
+	if (m<0 || n<0) return 0;
+	if (s1[m]==s2[n]) return 1+lcs(s1,s2,m-1,n-1);
+	else return std::max(lcs(s1,s2,m-1,n),lcs(s1,s2,m,n-1));
+}
 
+int lookup(const vector<vector<int>> &t, int i, int j) {
+	if (i<0 || j<0) return 0;
+	else return t[i][j];
+}
 
+int lcsDP(const string &s1, const string &s2, int m, int n) {
+	vector<vector<int>> t(s1.length(), vector<int>(s2.length()));
+	for (int i = 0; i < s1.length(); ++i) {
+		for (int j = 0; j < s2.length(); ++j) {
+			if (s1[i]==s2[j]) t[i][j] = lookup(t,i-1,j-1)+1;
+			else t[i][j] = std::max(lookup(t,i-1,j),lookup(t,i,j-1));
+		}
+	}
+	return t[s1.length()-1][s2.length()-1];
+}
 
