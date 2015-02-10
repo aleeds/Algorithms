@@ -1,4 +1,4 @@
-FLAGS = -std=c++11 -Wall -pedantic
+FLAGS = -std=c++11 -Wall -pedantic -O2
 
 # <Name Of Output File>: <Other Files that the file depends on> \
 	<Command to compile the output file>
