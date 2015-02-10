@@ -37,9 +37,7 @@ double getMaxValue(vector<int> indexes, vector<double> values) {
 pair<double,vector<int>> knapsack(int weightLimit, const vector<int> &weights, const vector<double> &values) {
 
 	int weightSize = weights.size();
-	pair<double,int> initialPair(0.0,0);
-	vector<pair<double,int>> temp(weightSize + 1, initialPair);
-	vector<vector<pair<double,int>>> vArr(weightLimit + 1, temp);
+	vector<vector<pair<double,int>>> vArr(weightLimit + 1, vector<pair<double,int>>(weightSize+1, pair<double,int>(0.0,0)));
 	int vArrSize = vArr.size();
 	for (int i = 1; i <= weightSize; ++i)  {
 		int weight = weights[i-1];
