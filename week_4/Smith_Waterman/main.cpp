@@ -30,9 +30,6 @@ int matchingBases(string strand);
 
 int recursiveMatches(string strand);
 
-
-
-
 void startTests();
 void test1();
 void test2();
@@ -139,11 +136,13 @@ void test1() {
 	cout << "========================================================" << "\n";
 
 	int result = matchingBases("CCACUGAACAGUG"); 
-	(result == 5) ? cout << "PASSED" << endl : cout <<"FAILED" << endl;
+	
+	cout << "MATCHING BASES: ";
+	(result == 5) ? cout << "PASSED" << endl : cout <<"FAILED, " << " Result:  " << result << endl;
 
 	result = recursiveMatches("CCACUGAACAGUG"); 
-	cout << result << endl;
-	(result == 5) ? cout << "PASSED" << endl : cout <<"FAILED" << endl;
+	cout << "RECURSIVE MATCHING BASES: ";
+	(result == 5) ? cout << "PASSED" << endl : cout <<"FAILED, " << " Result: " << result << endl;
 
 
 }
@@ -153,9 +152,13 @@ void test2() {
 	cout << "========================================================" << "\n";
 	cout << "========================================================" << "\n";
 	cout << "========================================================" << "\n";
+	int result = matchingBases("ACGUGCCACGAUUCAACGUGGCACAG");
+	cout << "MATCHING BASES: ";
+	(result == 11) ? cout << "PASSED" << endl : cout << "FAILED, " <<  "Result: " << result <<  endl;
 
-	(matchingBases("ACGUGCCACGAUUCAACGUGGCACAG") == 11) ? cout << "PASSED" << endl : cout << "FAILED" << endl;
-	(recursiveMatches("ACGUGCCACGAUUCAACGUGGCACAG") == 11) ? cout << "PASSED" << endl : cout << "FAILED" << endl;
+	result = recursiveMatches("ACGUGCCACGAUUCAACGUGGCACAG");
+	cout << "RECURSIVE MATCHING BASES: ";
+	(result == 11) ? cout << "PASSED" << endl : cout << "FAILED, " <<  "Result: " << result << endl;
 }
 
 void test3() {
@@ -163,6 +166,13 @@ void test3() {
 	cout << "========================================================" << "\n";
 	cout << "========================================================" << "\n";
 	cout << "========================================================" << "\n";
+	int result = matchingBases("CACAGUGACAC");
+	cout << "MATCHING BASES: ";
+	(result == 3) ? cout << "PASSED" << endl : cout << "FAILED, " <<  "Result: " << result <<  endl;
+
+	result = recursiveMatches("CACAGUGACAC");
+	cout << "RECURSIVE MATCHING BASES: ";
+	(result == 3) ? cout << "PASSED" << endl : cout << "FAILED, " <<  "Result: " << result << endl;
 }
 
 void test4() {
@@ -170,6 +180,13 @@ void test4() {
 	cout << "========================================================" << "\n";
 	cout << "========================================================" << "\n";
 	cout << "========================================================" << "\n";
+	int result = matchingBases("CACUGUCAGUCAGUCCCAAACCGGUUCCUUGGAA");
+	cout << "MATCHING BASES: ";
+	(result == 10) ? cout << "PASSED" << endl : cout << "FAILED, " <<  "Result: " << result <<  endl;
+
+	result = recursiveMatches("CACUGUCAGUCAGUCCCAAACCGGUUCCUUGGAA");
+	cout << "RECURSIVE MATCHING BASES: ";
+	(result == 10) ? cout << "PASSED" << endl : cout << "FAILED, " <<  "Result: " << result << endl;
 }
 
 void test5() {
@@ -177,6 +194,13 @@ void test5() {
 	cout << "========================================================" << "\n";
 	cout << "========================================================" << "\n";
 	cout << "========================================================" << "\n";
+	int result = matchingBases("AGAGAGAGAGAGAAGAGAGAGGAGAGAGAGAGAAGUCUCUCUCUCUCUCUCUCUC");
+	cout << "MATCHING BASES: ";
+	(result == 20) ? cout << "PASSED" << endl : cout << "FAILED, " <<  "Result: " << result <<  endl;
+
+	result = recursiveMatches("AGAGAGAGAGAGAAGAGAGAGGAGAGAGAGAGAAGUCUCUCUCUCUCUCUCUCUC");
+	cout << "RECURSIVE MATCHING BASES: ";
+	(result == 20) ? cout << "PASSED" << endl : cout << "FAILED, " <<  "Result: " << result << endl;
 }
 
 void test6() {
@@ -184,4 +208,11 @@ void test6() {
 	cout << "========================================================" << "\n";
 	cout << "========================================================" << "\n";
 	cout << "========================================================" << "\n";
+	int result = matchingBases("CACUCCUUGGGCAGUUGAUCUACUACUACUACUACUACUACUACUUUUGGAGCGAUUCU");
+	cout << "MATCHING BASES: ";
+	(result == 17) ? cout << "PASSED" << endl : cout << "FAILED, " <<  "Result: " << result <<  endl;
+
+	result = recursiveMatches("CACUCCUUGGGCAGUUGAUCUACUACUACUACUACUACUACUACUUUUGGAGCGAUUCU");
+	cout << "RECURSIVE MATCHING BASES: ";
+	(result == 17) ? cout << "PASSED" << endl : cout << "FAILED, " <<  "Result: " << result << endl;
 }
