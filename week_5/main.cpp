@@ -10,7 +10,7 @@ using std::string;
 using std::pair;
 
 #define endl "\n"
-#define DIAGNOSTIC_LEVEL 1
+#define DIAGNOSTIC_LEVEL 0
 
 template<typename T>
 void printVector(vector<T> v);
@@ -24,6 +24,8 @@ void printVector(vector<T> v) {
 	}
 	cout << endl;
 }
+
+bool canWin(const vector<vector<bool>> &baord);
 
 void startTests();
 void test1();
@@ -39,11 +41,8 @@ int main(int argc, char* argv[]) {
 }
 
 void startTests() {
-	cout << "========================================================" << "\n";
-	cout << "===================== SOME PROBLEM =====================" << "\n";
-	cout << "========================================================" << "\n";
+	cout << "====================== PEG PROBLEM =====================" << "\n";
 	cout << "==================== STARTING TESTS ====================" << "\n";
-	cout << "========================================================" << "\n";
   	clock_t begin = clock();
   	clock_t end = clock();
 	switch(DIAGNOSTIC_LEVEL) {
@@ -122,46 +121,78 @@ void startTests() {
 			cout << "========================================================" << "\n";
 			break;
 	}
+
+
 }
+/*
+void printBoard(vector<vector<bool>> board) {
+	for (int i = 0; 
+}
+*/
 
 void test1() {
-	cout << endl;
-	cout << "========================================================" << "\n";
-	cout << "========================================================" << "\n";
-	cout << "========================================================" << "\n";
+	vector<vector<bool>> board(3, vector<bool>(3, false));
+	board[2][1] = true;
+	board[2][2] = true;
+	(canWin(board))? cout << "CAN WIN" << endl : cout << "CANNOT WIN" << endl;
 }
 
 void test2() {
-	cout << endl;
-	cout << "========================================================" << "\n";
-	cout << "========================================================" << "\n";
-	cout << "========================================================" << "\n";
+	vector<vector<bool>> board(3, vector<bool>(3, false));
+	board[2][1] = true;
+	board[2][2] = true;
+	board[1][1] = true;
+	board[1][2] = true;
+	(canWin(board))? cout << "CAN WIN" << endl : cout << "CANNOT WIN" << endl;
 }
 
 void test3() {
-	cout << endl;
-	cout << "========================================================" << "\n";
-	cout << "========================================================" << "\n";
-	cout << "========================================================" << "\n";
+	vector<vector<bool>> board(3, vector<bool>(3, false));
+	board[2][1] = true;
+	board[2][2] = true;
+	board[1][1] = true;
+	board[1][2] = true;
+	board[0][0] = true;
+	(canWin(board))? cout << "CAN WIN" << endl : cout << "CANNOT WIN" << endl;
 }
 
 void test4() {
+	vector<vector<bool>> board;
+	vector<bool> row3(9, false);
+	row3[3] = true;
+	row3[4] = true;
+	vector<bool> row4(9, false);
+	row4[4] = true;
+	row4[6] = true;
+	vector<bool> row5(9, false);
+	row5[2] = true;
+	row5[3] = true;
+	row5[5] = true;
+	row5[6] = true;
+	vector<bool> row6(9, false);
+	row6[2] = true;
+	row6[4] = true;
+	vector<bool> row7(9, false);
+	row7[4] = true;
+	row7[5] = true;
+	vector<bool> emptyRow(9, false);
+	board.push_back(emptyRow);
+	board.push_back(emptyRow);
+	board.push_back(row3);
+	board.push_back(row4);
+	board.push_back(row5);
+	board.push_back(row6);
+	board.push_back(row7);
+	board.push_back(emptyRow);
+	board.push_back(emptyRow);
+	(canWin(board))? cout << "CAN WIN" << endl : cout << "CANNOT WIN" << endl;
 	cout << endl;
-	cout << "========================================================" << "\n";
-	cout << "========================================================" << "\n";
-	cout << "========================================================" << "\n";
 }
 
 void test5() {
 	cout << endl;
-	cout << "========================================================" << "\n";
-	cout << "========================================================" << "\n";
-	cout << "========================================================" << "\n";
 }
 
 void test6() {
 	cout << endl;
-	cout << "========================================================" << "\n";
-	cout << "========================================================" << "\n";
-	cout << "========================================================" << "\n";
 }
