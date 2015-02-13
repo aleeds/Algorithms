@@ -1,0 +1,11 @@
+A recursive solution with one extra parameter that is called the "memo"
+
+Traveling Salesman
+
+Use a vector of bools representing the cities youve been to
+	Convert the vector of bools to an int, use this as a lookup in the memo
+table
+
+
+Greedy Algorithms - 
+	Choose the best value at the current configuration
