@@ -131,21 +131,24 @@ void printBoard(vector<vector<bool>> board) {
 */
 
 void test1() {
+	//Can win
 	vector<vector<bool>> board(3, vector<bool>(3, false));
 	board[2][1] = true;
 	board[2][2] = true;
-	(canWin(board))? cout << "CAN WIN" << endl : cout << "CANNOT WIN" << endl;
+	(canWin(board))? cout << "PASSED, CAN WIN" << endl : cout << "FAILED, CANNOT WIN" << endl;
 }
 
 void test2() {
+	//Can win
 	vector<vector<bool>> board(3, vector<bool>(3, false));
 	board[2][1] = true;
 	board[2][2] = true;
 	board[1][1] = true;
 	board[1][2] = true;
-	(canWin(board))? cout << "CAN WIN" << endl : cout << "CANNOT WIN" << endl;
+	(canWin(board))? cout << "PASSED, CAN WIN" << endl : cout << "PASSED, CANNOT WIN" << endl;
 }
 
+	//Cannot win
 void test3() {
 	vector<vector<bool>> board(3, vector<bool>(3, false));
 	board[2][1] = true;
@@ -153,7 +156,7 @@ void test3() {
 	board[1][1] = true;
 	board[1][2] = true;
 	board[0][0] = true;
-	(canWin(board))? cout << "CAN WIN" << endl : cout << "CANNOT WIN" << endl;
+	(canWin(board))? cout << "FAILED, RETURNED CAN WIN" << endl : cout << "PASSED, RETURNED CANNOT WIN" << endl;
 }
 
 void test4() {
@@ -185,14 +188,22 @@ void test4() {
 	board.push_back(row7);
 	board.push_back(emptyRow);
 	board.push_back(emptyRow);
-	(canWin(board))? cout << "CAN WIN" << endl : cout << "CANNOT WIN" << endl;
+	(canWin(board))? cout << "PASSED, CAN WIN" << endl : cout << "FAILED, CANNOT WIN" << endl;
 	cout << endl;
 }
 
+//Can win
 void test5() {
+	vector<vector<bool>> board(5, vector<bool>(5, true));
+	board[2][2] = false;
+	(canWin(board))? cout << "PASSED, CAN WIN" << endl : cout << "FAILED, CANNOT WIN" << endl;
 	cout << endl;
 }
 
+//Cannot win
 void test6() {
+	vector<vector<bool>> board(5, vector<bool>(5, true));
+	(canWin(board))? cout << "FAILED, RETURNED CAN WIN" << endl : cout << "PASSED, RETURNED CANNOT WIN" << endl;
+	cout << endl;
 	cout << endl;
 }

@@ -1,6 +1,8 @@
 #include <vector>
+#include <unordered_map>
 
 using std::vector;
+using std::unordered_map;
 
 #define D 1
 #define L 2
@@ -66,8 +68,22 @@ bool onePeg(const vector<vector<bool>> &board) {
 	return true;
 }
 
+int computeHash(const vector<vector<bool>> &board) {
+	unsigned int n = 0;
+	unsigned int key = 0;
+	for (int i = 0; i < board.size(); ++i)	 {
+		for (int j = 0; j < board[i].size(); ++j)	 {
+			if (board[i][j]) {
+				key |= 1 << n;
+			}
+			++n;
+		}
+	}
+	return key;
+}
 
-bool canWinHelper(const vector<vector<bool>> &board) {
+bool canWinHelper(const vector<vector<bool>> &board, unordered_map<int,bool> &bMap) {
+	//Lookup in the table and see if it the board is winnable
 	if (onePeg(board)) return true;
 	else {
 		//Recurse on each item that can jump
@@ -76,8 +92,16 @@ bool canWinHelper(const vector<vector<bool>> &board) {
 				if (!board[i][j]) {
 					auto boards = allBoards(board,i,j);
 					for (auto q : boards) {
-						if (canWinHelper(q)) {
-							return true;
+						//If the board has already been solved, return the solution
+						int key = computeHash(q);
+						if (bMap.count(key) > 0) {
+							return bMap[key];
+						} else {
+							bool res = canWinHelper(q, bMap);
+							bMap[key] = res;
+							if(res) {
+								return true;
+							}
 						}
 					}
 				}	
@@ -88,5 +112,6 @@ bool canWinHelper(const vector<vector<bool>> &board) {
 }
 
 bool canWin(const vector<vector<bool>> &board) {
-	return canWinHelper(board);
+	unordered_map<int,bool> bMap;
+	return canWinHelper(board, bMap);
 }
