@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
+#include <string>
 #include <ctime>
 #include <algorithm>
 
@@ -8,8 +9,8 @@ using std::cout;
 using std::vector;
 using std::string;
 using std::pair;
-using std::endl;
 
+#define endl "\n"
 #define DIAGNOSTIC_LEVEL 0
 
 template<typename T>
@@ -25,7 +26,7 @@ void printVector(vector<T> v) {
 	cout << endl;
 }
 
-bool canWin(const vector<vector<bool>> &baord);
+void huffman(const string &message, vector<bool> &encoding);
 
 void startTests();
 void test1();
@@ -41,8 +42,10 @@ int main(int argc, char* argv[]) {
 }
 
 void startTests() {
-	cout << "====================== PEG PROBLEM =====================" << "\n";
+	cout << "========================================================" << "\n";
+	cout << "==================== HUFMAN PROBLEM ====================" << "\n";
 	cout << "==================== STARTING TESTS ====================" << "\n";
+	cout << "========================================================" << "\n";
   	clock_t begin = clock();
   	clock_t end = clock();
 	switch(DIAGNOSTIC_LEVEL) {
@@ -121,85 +124,25 @@ void startTests() {
 			cout << "========================================================" << "\n";
 			break;
 	}
-
-
 }
-/*
-void printBoard(vector<vector<bool>> board) {
-	for (int i = 0; 
-}
-*/
 
 void test1() {
-	//Can win
-	vector<vector<bool>> board(3, vector<bool>(3, false));
-	board[2][1] = true;
-	board[2][2] = true;
-	(canWin(board))? cout << "PASSED, CAN WIN" << endl : cout << "FAILED, CANNOT WIN" << endl;
+	string testString = "aaaaaabbbqqqqqmww";
+	vector<bool> encoding;
+	huffman(testString, encoding);
 }
 
 void test2() {
-	//Can win
-	vector<vector<bool>> board(3, vector<bool>(3, false));
-	board[2][1] = true;
-	board[2][2] = true;
-	board[1][1] = true;
-	board[1][2] = true;
-	(canWin(board))? cout << "PASSED, CAN WIN" << endl : cout << "PASSED, CANNOT WIN" << endl;
 }
 
-	//Cannot win
 void test3() {
-	vector<vector<bool>> board(3, vector<bool>(3, false));
-	board[2][1] = true;
-	board[2][2] = true;
-	board[1][1] = true;
-	board[1][2] = true;
-	board[0][0] = true;
-	(canWin(board))? cout << "FAILED, RETURNED CAN WIN" << endl : cout << "PASSED, RETURNED CANNOT WIN" << endl;
 }
 
 void test4() {
-	vector<vector<bool>> board;
-	vector<bool> row3(9, false);
-	row3[3] = true;
-	row3[4] = true;
-	vector<bool> row4(9, false);
-	row4[4] = true;
-	row4[6] = true;
-	vector<bool> row5(9, false);
-	row5[2] = true;
-	row5[3] = true;
-	row5[5] = true;
-	row5[6] = true;
-	vector<bool> row6(9, false);
-	row6[2] = true;
-	row6[4] = true;
-	vector<bool> row7(9, false);
-	row7[4] = true;
-	row7[5] = true;
-	vector<bool> emptyRow(9, false);
-	board.push_back(emptyRow);
-	board.push_back(emptyRow);
-	board.push_back(row3);
-	board.push_back(row4);
-	board.push_back(row5);
-	board.push_back(row6);
-	board.push_back(row7);
-	board.push_back(emptyRow);
-	board.push_back(emptyRow);
-	(canWin(board))? cout << "PASSED, CAN WIN" << endl : cout << "FAILED, CANNOT WIN" << endl;
 }
 
-//Can win
 void test5() {
-	vector<vector<bool>> board(5, vector<bool>(5, true));
-	board[2][2] = false;
-	(canWin(board))? cout << "PASSED, CAN WIN" << endl : cout << "FAILED, CANNOT WIN" << endl;
 }
 
-//Cannot win
 void test6() {
-	vector<vector<bool>> board(5, vector<bool>(5, true));
-	(canWin(board))? cout << "FAILED, RETURNED CAN WIN" << endl : cout << "PASSED, RETURNED CANNOT WIN" << endl;
 }
