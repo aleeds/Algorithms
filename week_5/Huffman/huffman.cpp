@@ -84,6 +84,22 @@ void printTree(Node const * const n) {
 	}
 }
 
+void printTree2(const Node &n) {
+	if (n.left == nullptr && n.right == nullptr) {
+		cout << "(" << n.freq << ", " << n.letter << ") ";
+	} else if (n.left == nullptr) {
+		cout << "(" << n.freq << ") ";
+		printTree2(*(n.right));
+	} else if (n.right == nullptr) {
+		cout << "(" << n.freq << ") ";
+		printTree2(*(n.left));
+	} else {
+		cout << "(" << n.freq << ") ";
+		printTree2(*(n.left));
+		printTree2(*(n.right));
+	}
+}
+
 vector<int> getCounts(const string &message) {
 	vector<int> counts(256,0);
 	for (auto itr = message.begin(); itr != message.end(); ++itr) {
@@ -98,24 +114,12 @@ Node buildHuffTree(priority_queue<Node, vector<Node>, myComp> pq) {
 	for (int i = 1; i < sz; ++i) {
 		Node l = pq.top();
 		pq.pop();
-		cout << "POPPED: " << l.freq << " " << l.letter << " ";
-		if (l.left == nullptr) cout << " l:N ";
-		if (l.right == nullptr) cout << " r:N ";
-		cout << endl;
 		Node r = pq.top();
 		pq.pop();
-		cout << "POPPED: " << r.freq << " " << r.letter << " ";
-		if (r.left == nullptr) cout << " l:N ";
-		if (r.right == nullptr) cout << " r:N ";
-		cout << endl;
 		Node z(&l, &r, l.freq + r.freq);
 		pq.push(z);
-		cout << "PUSHED: " << z.freq << " " << z.letter << " ";
-		cout << "z.left: " << (*z.left).freq << "z.right: " << (*z.right).freq << " ";
-		cout << endl;
 	}
-	printQueue(pq);
-	printTree(&pq.top());
+	printTree2(pq.top());
 	return pq.top();
 }
 
@@ -123,7 +127,8 @@ Node buildTree2() {
 	Node n1(5, 'a');
 	Node n2(3, 'b');
 	Node tempTree(&n1, &n2, 8);
-	printTree(&tempTree);
+	//printTree(&tempTree);
+	//printTree2(tempTree);
 	return tempTree;
 }
 
@@ -137,12 +142,12 @@ void huffman(const string &message, vector<bool> &encoding) {
 			pq.push(n);
 		}
 	}
-	printQueue(pq);
+	//printQueue(pq);
 	Node tree = buildHuffTree(pq);
 //	printTree(&tree);
 //	cout << "ROOT: " << tree.freq << endl;
-//	Node tempTree = buildTree2();
-//	cout << endl;
+	//Node tempTree = buildTree2();
+	cout << endl;
 	//Node n1(5, 'a');
 	//Node n2(3, 'b');
 	//Node tempTree(&n1, &n2, 8);
